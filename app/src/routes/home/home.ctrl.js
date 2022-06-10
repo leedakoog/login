@@ -8,7 +8,7 @@ const output = {
 }
 
 const users = {
-    id: ["dabin", "yujin", "girlfriend"],
+    id: ["dabin", "yujin", "girlfriend"], 
     psword: ["1234", "12345", "123456"],
 }
 
@@ -29,6 +29,7 @@ const process = {
             {
                 success: false,
                 msg: "로그인에 실패하셨습니다.",
+                errer: "에러발생",
             }
         )
     }
