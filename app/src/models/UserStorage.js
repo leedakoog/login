@@ -14,8 +14,19 @@ class UserStorage { //클래스안에 변수를 선언할 때는 const가 필요
             }
             return newUsers;
         }, {});
-        
         return newUsers;
+    }
+
+    static getUserInfo(id) {  //User.js 에서 받아온 id 값을 파라미터로
+        const users = this.#users;
+        const idx = users.id.indexOf(id);  //id가 들어있는 인덱스 반환.
+        const usersKeys = Object.keys(users);  // => [id, psword, name], 키값들을 리스트로 만듦.
+        const userInfo = usersKeys.reduce((newUsers, info) => {
+            newUsers[info] = users[info][idx];
+            return newUsers;
+        }, {});
+
+        return userInfo;
     }
 }
 
