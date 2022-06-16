@@ -6,7 +6,10 @@ const output = {
     },
     login: (req, res) => {
         res.render("home/login") //페이지를 렌더링
-    } 
+    },
+    register: (req, res) => {
+        res.render("home/register");
+    }
 }
 
 const process = {
