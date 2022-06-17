@@ -34,7 +34,7 @@ function register() {
                 location.href = "/login"; //로케이션 사용법? -> success했을 경우 "/"경로로 이동.
             }
             else {
-                alert(res.msg) //화면에 창으로 띄워줌.
+                alert(res.msg) //화면에 창으로 띄워줌
             }
         })
         .catch((err) => {
