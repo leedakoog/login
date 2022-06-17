@@ -12,6 +12,9 @@ function register() {
     if (!id.value) {
         return alert("아이디를 입력해주십시오.");
     }
+    if (!psword.value) {
+        return alert("비밀번호를 입력해주십시오.")
+    }
     if (psword.value !== confirmPsword.value) {
         return alert("비밀번호가 일치하지 않습니다.");
     }
@@ -21,7 +24,7 @@ function register() {
         name: name.value,
         psword: psword.value,
     }
-    fetch("/register", {
+    fetch("/register", {  //fetch사용법 확인.
         method: "POST", //body(에 담아서)를 통해서 데이터를 전달할 때는 http메소드인 포스트로 전달해야함.
         headers: {
             "Content-Type": "application/json"

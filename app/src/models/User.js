@@ -5,10 +5,10 @@ class User {
         this.body = body;
     }
 
-    login() {
+    async login() {
         const client = this.body;
-        const {id, psword} = UserStorage.getUserInfo(client.id);
-        
+        const {id, psword} = await UserStorage.getUserInfo(client.id);
+        //await은 async안에서만 쓸 수 있음. await은 promise를 반환하는 것에서만 사용가능.
         if(id) {
             if (id === client.id && psword === client.psword) {
                 return {success: true};
