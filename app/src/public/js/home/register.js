@@ -9,30 +9,35 @@ const id = document.querySelector("#id"),
 //어싱크: 비동기, 디퍼: 순서대로 실행
 registerBtn.addEventListener("click", register)
 function register() {
+    if (!id.value) {
+        return alert("아이디를 입력해주십시오.");
+    }
+    if (psword.value !== confirmPsword.value) {
+        return alert("비밀번호가 일치하지 않습니다.");
+    }
+
     const req = {
         id: id.value,
         name: name.value,
         psword: psword.value,
-        confirmPsword: confirmPsword.value,
     }
-    console.log(req)
-    // fetch("/register", {
-    //     method: "POST", //body를 통해서 데이터를 전달할 때는 http메소드인 포스트로 전달해야함.
-    //     headers: {
-    //         "Content-Type": "application/json"
-    //     },
-    //     body: JSON.stringify(req),//stringify는 데이터를 문자열로 바꿔주는 메소드
-    // })
-    //     .then((res) => res.json())
-    //     .then((res) => {
-    //         if(res.success) {
-    //             location.href = "/"; //로케이션 사용법? -> success했을 경우 "/"경로로 이동.
-    //         }
-    //         else {
-    //             alert(res.msg) //화면에 창으로 띄워줌.
-    //         }
-    //     })
-    //     .catch((err) => {
-    //         console.error(new Error("로그인 중 에러 발생"))
-    // })
+    fetch("/register", {
+        method: "POST", //body(에 담아서)를 통해서 데이터를 전달할 때는 http메소드인 포스트로 전달해야함.
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(req),//stringify는 데이터를 문자열로 바꿔주는 메소드
+    })
+        .then((res) => res.json()) //서버에 응답이 다 받아지는 순간 promise객체가 생성
+        .then((res) => {
+            if(res.success) {
+                location.href = "/login"; //로케이션 사용법? -> success했을 경우 "/"경로로 이동.
+            }
+            else {
+                alert(res.msg) //화면에 창으로 띄워줌.
+            }
+        })
+        .catch((err) => {
+            console.error("회원가입 중 에러 발생")
+    })
 }   
