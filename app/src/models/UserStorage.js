@@ -13,9 +13,9 @@ class UserStorage { //클래스안에 변수를 선언할 때는 const가 필요
 
         return userInfo;
     }
-    
-    static getUsers(...fields) {
-        // const users = this.#users;
+
+    static #getUsers(data, fields) {
+        const users = JSON.parse(data);
         const newUsers = fields.reduce((newUsers, field) => {
             if(users.hasOwnProperty(field)) {
                 newUsers[field] = users[field];
@@ -23,6 +23,14 @@ class UserStorage { //클래스안에 변수를 선언할 때는 const가 필요
             return newUsers;
         }, {});
         return newUsers;
+    }
+
+    static getUsers(...fields) {
+        return fs.readFile("./src/databases/users.json") //readFile메소드는 promise를 반환함. promise를 반환하게 되면 then이라는 메소드에 접근 가능. then은 성공했을 때, catch는 실패했을때
+            .then((data) => {
+                return this.#getUsers(data, fields);
+            })
+            .catch(console.error);
     }
 
     static getUserInfo(id) {  //User.js 에서 받아온 id 값을 파라미터로
@@ -33,12 +41,17 @@ class UserStorage { //클래스안에 변수를 선언할 때는 const가 필요
             .catch(console.error);
     }
 
-    static save(userInfo) {
-        // const users = this.#users;
-        users.id.push(userInfo.id);
-        users.name.push(userInfo.name);
-        users.psword.push(userInfo.psword);
-        return { success: true };
+    static async save(userInfo) {
+        const users = await this.getUsers("id", "psword", "name");  //데이터 추가
+        if(!users.id.includes(userInfo.id)) {
+            users.id.push(userInfo.id);
+            users.name.push(userInfo.name);
+            users.psword.push(userInfo.psword);
+            fs.writeFile("./src/databases/users.json", JSON.stringify(users));
+            return { success: true };
+        }
+        else {throw "이미 존재하는 아이디입니다."}
+
     }
 }
 
