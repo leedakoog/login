@@ -4,6 +4,9 @@ const bodyParser = require("body-parser") //npm i body-parser -s 로 bodyparser 
 const app = express()
 //라우팅
 const home = require("./src/routes/home")
+const connectDB = require("./src/config/db");
+
+connectDB();
 
 app.set("views", "./src/views")
 app.set("view engine", "ejs")
